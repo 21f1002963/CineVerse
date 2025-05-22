@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your OTP</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        table {
+            width: 100%;
+            max-width: 600px; /* Set a maximum width for larger screens */
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-collapse: collapse; /* Collapse table borders */
+        }
+
+        td {
+            padding: 10px;
+            text-align: center; /* Center the content within table cells */
+        }
+
+        .otp-code {
+            font-size: 24px;
+            font-weight: bold;
+            color: #007bff;
+            letter-spacing: 6px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+        .footer {
+            font-size: 12px;
+            color: #777777;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <tr>
+            <td>
+                <p>Dear #{name},</p>
+                <p>Your One-Time Password (OTP) for verification is:</p>
+            </td>
+        </tr>
+        <tr>
+            <td class="otp-code">
+                #{OTP}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p>This OTP is valid for 10 minutes. Please do not share it with anyone.</p>
+            </td>
+        </tr>
+        <tr>
+            <td class="footer">
+                <p>If you did not request this OTP, please ignore this email.</p>
+                <p>Thank you.</p>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
