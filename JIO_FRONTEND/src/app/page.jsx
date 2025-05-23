@@ -17,27 +17,28 @@ export default function Home() {
         return (await api.get(ENDPOINT.discoverTrending)).data.results;
       },
     },
-    {
-      label: "Upcoming",
-      href: "upcoming",
-      fetcher: async () => {
-        return (await api.get(ENDPOINT.discoverUpcoming)).data.results;
-      },
-    },
+    // {
+    //   label: "Upcoming",
+    //   href: "upcoming",
+    //   fetcher: async () => {
+    //     return (await api.get(ENDPOINT.discoverUpcoming)).data.results;
+    //   },
+    // },
   ];
 
-  const getBannerData = async () => {
-    return (await api.get(ENDPOINT.discoverNowPlaying, {
-      params: {
-        language: 'en-US',
-        page: 1,
-      },
-    })).data?.results;
-  };
+  // const getBannerData = async () => {
+  //   return (await api.get(ENDPOINT.discoverNowPlaying, {
+  //     params: {
+  //       language: 'en-US',
+  //       page: 1,
+  //     },
+  //   })).data?.results;
+  // };
 
   return (
     <main>
-      <ListingSection bannerFetcher={getBannerData} list={list} />
+      {/* <ListingSection bannerFetcher={getBannerData} list={list} /> */}
+      <ListingSection  />
     </main>
   );
 }
