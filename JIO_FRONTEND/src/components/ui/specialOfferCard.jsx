@@ -25,7 +25,7 @@ const SpecialOfferCard = ({
           {title}
         </div>
         <ul className="text-sm mb-6 list-disc text-start pl-5">
-          {features.map((feature, index) => (
+          {features?.map((feature, index) => (
             <li key={index}>{feature}</li>
           ))}
         </ul>

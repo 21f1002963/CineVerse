@@ -44,7 +44,7 @@ const CategoryList = async ({ fetcher, className }) => {
 
 export const CategoryListFallback = () => (
   <ul className="flex gap-4 w-full overflow-scroll scrollbar-hide">
-    {new Array(12).fill(0).map((e, index) => (
+    {new Array(12)?.fill(0)?.map((e, index) => (
       <Skeleton key={index} className="min-w-[200px] h-[300px] rounded-lg" />
     ))}
   </ul>

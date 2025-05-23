@@ -8,7 +8,7 @@ const ListingSection = ({ bannerFetcher, list }) => {
     <section>
       {/* Quick links chips  */}
       <div className="p-6 flex gap-4 mt-[64px] text-nowrap overflow-scroll scrollbar-hide">
-        {list.map((item) => (
+        {list?.map((item) => (
           <Link
             key={item.href}
             className="px-3 py-2 rounded-full bg-white/15 text-sm"
@@ -25,7 +25,7 @@ const ListingSection = ({ bannerFetcher, list }) => {
         </Suspense>
       </div>
       {/* Category Section */}
-      {list.map((item) => (
+      {list?.map((item) => (
         <CategorySection
           key={item.label}
           id={item.href}

@@ -53,11 +53,11 @@ export default function Footer() {
       <div className="md:mx-auto">
         <div className="flex flex-col md:flex-row md:justify-between md:items-start px-8 py-4">
           <div className="flex flex-col md:flex-row md:items-center gap-8 md:gap-16 mt-8">
-            {headings.map((heading, index) => (
+            {headings?.map((heading, index) => (
               <div key={index} className="flex flex-col gap-4">
                 <h3 className="text-lg font-bold uppercase">{heading.title}</h3>
                 <div className="flex flex-col">
-                  {heading.links.map((link, linkIndex) => (
+                  {heading?.links?.map((link, linkIndex) => (
                     <Link href="#" key={linkIndex}>
                       {link}
                     </Link>
@@ -69,7 +69,7 @@ export default function Footer() {
           <div className="flex flex-col gap-4 md:gap-8 mt-8">
             <h3 className="text-lg font-bold uppercase">Connect With Us</h3>
             <div className="flex gap-4">
-              {connectWithUsLinks.map((link, linkIndex) => (
+              {connectWithUsLinks?.map((link, linkIndex) => (
                 <Link
                   key={linkIndex}
                   href={link.href}
@@ -91,7 +91,7 @@ export default function Footer() {
               Download the App
             </h3>
             <div className="flex gap-4">
-              {downloadAppLinks.map((link, linkIndex) => (
+              {downloadAppLinks?.map((link, linkIndex) => (
                 <Link key={linkIndex} href="#" className="flex items-center">
                   <Image
                     src={link.icon}

@@ -2,41 +2,46 @@ import ListingSection from "@/components/section/Listing_section";
 import { api, ENDPOINT } from "@/lib/api";
 import React from "react";
 
+// Cache API responses or set revalidation time
+export const revalidate = 3600; // Revalidate every hour
 
-const MoviesPage = (props) => {
+// Generic error handler for API calls
+const safeFetch = async (endpoint) => {
+  try {
+    const response = await api.get(endpoint);
+    return response.data?.data?.results || []; // Fallback to empty array
+  } catch (error) {
+    console.error(`Failed to fetch ${endpoint}:`, error);
+    return []; // Return empty array on error
+  }
+};
+
+const MoviesPage = () => {
   const list = [
     {
       label: "Top Comedy Movies",
       href: "comedy",
-      fetcher: async () => {
-        return (await api.get(ENDPOINT.fetchComedyMovies)).data.data?.results;
-      },
+      fetcher: () => safeFetch(ENDPOINT.fetchComedyMovies),
     },
     {
       label: "Top Horror Movies",
       href: "horror",
-      fetcher: async () => {
-        return (await api.get(ENDPOINT.fetchHorrorMovies)).data.data?.results;
-      },
+      fetcher: () => safeFetch(ENDPOINT.fetchHorrorMovies),
     },
     {
       label: "Top Romance Movies",
       href: "romance",
-      fetcher: async () => {
-        return (await api.get(ENDPOINT.fetchRomanceMovies)).data.data?.results;
-      },
+      fetcher: () => safeFetch(ENDPOINT.fetchRomanceMovies),
     },
     {
       label: "Top Action Movies",
       href: "action",
-      fetcher: async () => {
-        return (await api.get(ENDPOINT.fetchActionMovies)).data.data?.results;
-      },
+      fetcher: () => safeFetch(ENDPOINT.fetchActionMovies),
     },
-    
   ];
+
   const getBannerData = async () => {
-    return (await api.get(ENDPOINT.fetchAnimeMovies)).data?.data?.results;
+    return await safeFetch(ENDPOINT.fetchAnimeMovies);
   };
 
   return (

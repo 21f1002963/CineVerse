@@ -42,7 +42,7 @@ const Header = () => {
           </Link>
         </div>
         <nav className="lg:flex lg:space-x-4 space-x-0 hidden">
-          {navLinks.map((tab) => (
+          {navLinks?.map((tab) => (
             <Link
               href={tab.href}
               key={tab.key}

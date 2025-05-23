@@ -8,7 +8,6 @@ import { LucideLoader2 } from "lucide-react"
 import { api, ENDPOINT } from "@/lib/api"
 import { useDispatch, useSelector } from "react-redux"
 import { useRouter } from "next/navigation"
-import useRazorpay from "react-razorpay"
 import { updateUserPremium } from "@/redux/userSlice"
 
 const offers = [
@@ -134,7 +133,7 @@ return (
             Kids & Family hub + 365 days of reality!
           </p>
           <div className="flex flex-col md:flex-row w-full md:gap-8 gap-2">
-            {offers.map((offer, index) => (
+            {offers?.map((offer, index) => (
               <SpecialOfferCard
                 key={index}
                 title={offer.title}
