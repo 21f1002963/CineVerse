@@ -1,0 +1,42 @@
+node_modules
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# dotenv environment variables
+.env
+.env.*
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Build output
+dist/
+build/
+
+# VSCode settings
+.vscode/
+
+# Misc
+*.local
+coverage/
+
+# Next.js build output (frontend)
+.next/
+
+# Other
+*.swp
+*.swo
+
+# Ignore compiled files
+*.pyc
+*.pyo
+__pycache__/
+
+# Ignore public runtime cache
+public/cache/

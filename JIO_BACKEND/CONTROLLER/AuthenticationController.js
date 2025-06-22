@@ -1,4 +1,4 @@
-import { otpGenerator } from '../UTILITY/OTPGenerator';
+const otpGenerator = require('../UTILITY/OTPGenerator');
 const { JWT_SECRET } = process.env;
 const UserModel = require('../MODEL/UserModel');
 const emailSender = require('../UTILITY/DynamicEmailSender');
@@ -32,7 +32,7 @@ async function signUpHandler(req, res) {
         if(user){
             return res.status(400).json({
                 message: 'User already exists',
-                status: "Failure"
+                status: "failure"
             });
         }
 
@@ -49,16 +49,15 @@ async function signUpHandler(req, res) {
         res.status(201).json({
             message: 'User created successfully',
             status: "success",
-            user: {
+            data: {
                 email: newUser.email,
                 name: newUser.name, 
                 _id: newUser._id,
             }
         });
     } catch(error) {
-        console.log('Error while creating user', error);
         res.status(500).json({
-            message: 'Internal server error',
+            message: 'Error while creating user',
             status: "failure"
         });
     }

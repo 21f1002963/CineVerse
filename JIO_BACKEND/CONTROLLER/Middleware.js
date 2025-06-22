@@ -5,7 +5,8 @@ const checkInput = (req, res, next) => {
         res.status(400).json({
             status: "failure",
             message: "userDetails are empty"
-        })
+        });
+        return;
     } else {
         next();
     }

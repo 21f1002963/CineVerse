@@ -2,36 +2,33 @@ const UserModel = require('../MODEL/UserModel');
 const { tmdbAPI, TMDB_ENDPOINT } = require('../SERVICES/tmdb.services');
 
 const createUser = async function(req, res){
+    // Validate required fields
+    if (!req.body.email || !req.body.password || !req.body.name) {
+        return res.status(400).json({
+            message: "Name, email, and password are required"
+        });
+    }
     try {
         const userObject = req.body;
         const user = await UserModel.create(userObject);
-        res.status(201).json(user);
+        res.status(201).json({ data: user });
     } catch (error) {
         res.status(500).json({
-            message: "Internal server error",
-            error: error
-        })
+            message: "Internal server error"
+        });
     }
 }
 
 const getAllUsers = async function(req, res){
     try{
-        const user = await UserModel.find();
-
-        if(user.length != 0){
-            res.status(200).json({
-                message: user
-            })
+        const users = await UserModel.find();
+        if(users.length !== 0){
+            res.status(200).json({ data: users });
         }else{
-            res.status(404).json({
-                message: "No users found"
-            })
+            res.status(404).json({ message: "No users found" });
         }
     } catch (error) {
-        res.status(500).json({
-            message: "Internal server error",
-            error: error
-        })
+        res.status(500).json({ message: "Internal server error" });
     }
 }
 
@@ -39,21 +36,13 @@ const getUserById = async function(req, res){
     try{
         const id = req.params.id;
         const user = await UserModel.findById(id);
-
         if(user){
-            res.status(200).json({
-                message: user
-            })
+            res.status(200).json({ data: user });
         }else{
-            res.status(404).json({
-                message: "User not found"
-            })
+            res.status(404).json({ message: "User not found" });
         }
     } catch (error) {
-        res.status(500).json({
-            message: "Internal server error",
-            error: error
-        })
+        res.status(500).json({ message: "Internal server error" });
     }
 }
 

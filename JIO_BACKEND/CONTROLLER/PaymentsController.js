@@ -3,8 +3,8 @@ dotenv.config();
 const PayU = require("payu");
 const ShortID = require('short-unique-id');
 const uid = new ShortID({ length: 10 });
-const cors = require('cors');
-const {PORT, PAYU_PUBLIC_KEY, PAYU_SECRET_KEY} = process.env;
+const { PAYU_PUBLIC_KEY, PAYU_SECRET_KEY } = process.env;
+const UserModel = require('../MODEL/UserModel'); // Fix: Import UserModel
 
 const payuClient = new PayU({
     key: PAYU_PUBLIC_KEY,
@@ -12,60 +12,63 @@ const payuClient = new PayU({
 },"test");
 
 const getPaymentController = async (req, res) => {
-    try{
+    try {
+        // TODO: Validate req.body for amount, currency, etc. if needed
         const amount = 1000;
         const currency = "INR";
         const receipt = `rp_${uid.rnd()}`;
         const orderConfig = {
-            amount: amount,
-            currency: currency,
-            receipt: receipt,
-        }
-        
-        const order = await payuClient.paymentInitiate(orderConfig)
-
+            amount,
+            currency,
+            receipt,
+        };
+        const order = await payuClient.paymentInitiate(orderConfig);
         res.status(200).json({
             status: "success",
-            order: order
+            order
         });
-
-    } catch(err){
+    } catch (err) {
         res.status(500).json({
             status: "failed",
-            message: err.message
+            message: "Payment initiation failed"
         });
     }
-}
+};
 
 const updatePremiumAccessController = async (req, res) => {
-    try{
+    try {
         const email = req.body.email;
-        const user = await User.findOne({email: email});
-        if(!user){
+        if (!email) {
+            return res.status(400).json({
+                status: "failed",
+                message: "Email is required"
+            });
+        }
+        const user = await UserModel.findOne({ email });
+        if (!user) {
             return res.status(404).json({
                 status: "failed",
                 message: "User not found"
             });
         }
-        user.isPremium = true;
         await UserModel.findOneAndUpdate(
-            {email: email},
-            {$set:{isPremium: true}},
-            {new: true}
+            { email },
+            { $set: { isPremium: true } },
+            { new: true }
         );
         res.status(200).json({
             status: "success",
             message: "User is now premium"
         });
-    } catch(err){
+    } catch (err) {
         res.status(500).json({
             status: "failed",
-            message: err.message
+            message: "Failed to update premium access"
         });
-    } 
-}
+    }
+};
 
 module.exports = {
     getPaymentController,
     updatePremiumAccessController
-}
+};

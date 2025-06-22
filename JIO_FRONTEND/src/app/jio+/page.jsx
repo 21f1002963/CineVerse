@@ -1,12 +1,31 @@
+'use client'; // Add this at the top
+
+import { useEffect, useState } from 'react';
 import { api, ENDPOINT, getStreamingVideoThumbnail } from "@/lib/api";
-import { cn } from "@/lib/utils";
-import Link from "next/link";
-import Image from "next/image";
-import { PlayCircleIcon } from "lucide-react";
 
-export default async function JioPlusPage() {
-  const videos = (await api.get(ENDPOINT.fetchAllStreamingVideos)).data?.data;
+export default function JioPlusPage() {
+  const [videos, setVideos] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
+  useEffect(() => {
+    const fetchVideos = async () => {
+      try {
+        const response = await api.get(ENDPOINT.fetchAllStreamingVideos);
+        setVideos(response.data?.data || []);
+      } catch (err) {
+        setError(err);
+        console.error("Failed to fetch videos:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchVideos();
+  }, []);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error loading videos</div>;
   return (
     <main className="h-screen mt-20 p-8">
       <h1 className="text-2xl font-medium mb-6">Jio+ Premium Videos</h1>

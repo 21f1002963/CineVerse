@@ -1,8 +1,8 @@
 const dotenv = require('dotenv')
-const nodemailer= require('nodemailer')
+const nodemailer = require('nodemailer')
 dotenv.config()
 
-const SendGridTechDetails={
+const SendGridTechDetails = {
     host: "smtp.sendgrid.net",
     port: 465,
     secure: true,
@@ -12,20 +12,29 @@ const SendGridTechDetails={
     }
 }
 
-const msg = {
-    to: 'mkmohitkumar700@gmail.com',// Change to your recipient
-    from: '21f1002963@ds.study.iitm.ac.in', // Change to your verified sender
-    subject: 'Sending with SendGrid is Fun',
-    text: 'and easy to do anywhere, even with Node.js',
-    html: '<strong>and easy to do anywhere, even with Node.js</strong>',
-}
-
 const transporter = nodemailer.createTransport(SendGridTechDetails);
 
-transporter.sendMail(msg).then(() => {
-    console.log('Email sent')
-  })
-    .catch((error) => {
-        console.error
-    })
+async function sendMail({ to, from, subject, text, html }) {
+    if (!to || !from || !subject) {
+        throw new Error('Missing required email parameters');
+    }
+    try {
+        await transporter.sendMail({ to, from, subject, text, html });
+        console.log('Email sent');
+    } catch (error) {
+        console.error('Email sending error:', error);
+        throw error;
+    }
+}
+
+module.exports = sendMail;
+
+// Usage example:
+// sendMail({
+//   to: 'recipient@example.com',
+//   from: process.env.APP_EMAIL,
+//   subject: 'Subject',
+//   text: 'Text body',
+//   html: '<b>HTML body</b>'
+// });
 

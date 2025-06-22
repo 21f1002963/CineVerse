@@ -1,13 +1,22 @@
 const bcrypt = require('bcrypt');
 
-const password="Mk@8921550964!";
-
-async function create(){
-    console.time();
+async function hashPassword(password) {
+    if (!password) throw new Error('Password is required');
     const randomSalt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, randomSalt);
-    const isTheSame = await bcrypt.compare(password, hashedPassword);
-    console.timeEnd();
-    console.log('Hashed Password : ', hashedPassword);
+    return await bcrypt.hash(password, randomSalt);
 }
-create();
+
+async function comparePassword(password, hash) {
+    if (!password || !hash) throw new Error('Password and hash are required');
+    return await bcrypt.compare(password, hash);
+}
+
+module.exports = { hashPassword, comparePassword };
+
+// Usage example:
+// const { hashPassword, comparePassword } = require('./password');
+// (async () => {
+//   const hash = await hashPassword('yourPassword');
+//   const isMatch = await comparePassword('yourPassword', hash);
+//   console.log('Hash:', hash, 'Match:', isMatch);
+// })();

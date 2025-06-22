@@ -21,15 +21,7 @@ const SchemaRules = {
     password: {
         type: String,
         required: [true, "Password is required"],
-        minLength: [10, "Password must be atleast 10 characters long"]
-    },
-    confirmPassword: {
-        type: String,
-        required: true,
-        minLength: 10,
-        validate: [function(){
-            return this.password === this.confirmPassword;
-        }, "Password and confirm password do not match"]
+        minlength: [10, "Password must be atleast 10 characters long"]
     },
     createAt:{
         type: Date,
@@ -50,46 +42,16 @@ const SchemaRules = {
     otpExpiry:{
         type: Date
     },
-
     wishList: [wishListSchema], 
 }
 
 const userSchema = new mongoose.Schema(SchemaRules);
-let validCategories = ['Admin', 'User', 'Seller'];
 
 userSchema.pre("save", async function(next){
-    const user = this;
-    const password = user.password;
-    const confirmPassword = user.confirmPassword;
-    if (password == confirmPassword) {
-        delete user.confirmPassword
-        user.password = await bcrypt.hash(password, 10);
-    } else {
-        const err = new Error("Password and confirmPassword are not the same ")
-        next(err)
+    if (this.isModified('password')) {
+        this.password = await bcrypt.hash(this.password, 10);
     }
-});
-
-userSchema.pre("save", function (next) {
-    const user = this;
-    if (user.role) {
-        const isValid = validCategories.includes(user.role);
-        if (isValid) {
-            next();
-        } else {
-            return next(err);
-        }
-    } else {
-        user.role = "user";
-        next();
-    }
-})
-
-userSchema.post("save", function(next){
-    console.log('New user created');
-    this["_id"] = undefined;
-    this.__v = undefined;
-    this.password= undefined;
+    next();
 });
 
 const UserModel = mongoose.model('user', userSchema);
