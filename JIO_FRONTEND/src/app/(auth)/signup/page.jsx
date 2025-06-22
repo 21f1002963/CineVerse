@@ -38,12 +38,13 @@ export default function LoginForm() {
         confirmPassword: confirmPassword,
       });
       if (res.data.status === "success") {
-        dispatch(userLoggedInDetails(res.data.user));
+        dispatch(userLoggedInDetails(res.data.user)); // Use 'user' from backend
         router.push("/");
-      }
-      if (res.data) {
+        toast({ title: "Account Created!" });
+      } else {
         toast({
-          title: "Account Created!",
+          title: res.data.message || "Signup failed",
+          variant: "destructive",
         });
       }
     } catch (err) {

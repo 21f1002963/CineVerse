@@ -1,56 +1,55 @@
 import axios from "axios";
 
+const API_BASE = typeof window === "undefined"
+  ? process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000"
+  : "";
+
 export const ENDPOINT= {
     //Auth
-    login: "/auth/login",
-    signup: "/auth/signup",
-    logout: "/auth/logout",
-    user: "/user",
-    forgetPassword: "/auth/forgetpassword",
-    resetPassword: "/auth/resetpassword",
+    login: "/api/auth/login",
+    signup: "/api/auth/signup",
+    logout: "/api/auth/logout",
+    user: "/api/user",
+    forgetPassword: "/api/auth/forgetpassword",
+    resetPassword: "/api/auth/resetpassword",
     //Discover
-    discoverNowPlaying: "/movie/now_playing",
-    discoverPopular: "/movie/popular",
-    discoverTopRated: "/movie/top_rated",
-    discoverUpcoming: "/movie/upcoming",
+    discoverNowPlaying: "/api/movies/now_playing",
+    discoverPopular: "/api/movies/popular",
+    discoverTopRated: "/api/discover/top_rated",
+    discoverTrending: "/api/discover/trending",
+    discoverUpcoming: "/api/movies/upcoming",
     //Movies
-    // fetchActionMovies: "/movies/action",
-    // fetchComedyMovies: "/movies/comedy",
-    // fetchHorrorMovies: "/movies/horror",
-    // fetchRomanceMovies: "/movies/romance",
-    // fetchAnimeMovies: "/movies/anime",
-    getMovieDetails: (id) => `/movie/${id}`,
+    fetchActionMovies: "/api/movies/action",
+    fetchComedyMovies: "/api/movies/comedy",
+    fetchHorrorMovies: "/api/movies/horror",
+    fetchRomanceMovies: "/api/movies/romance",
+    fetchAnimeMovies: "/api/movies/anime",
+    getMovieDetails: (id) => `/api/movies/${id}`,
     //TV Shows
-    // fetchActionTvShows: `/tv/action`,
-    // fetchComedyTvShows: `/tv/comedy`,
-    // fetchCrimeTvShows: `/tv/crime`,
-    // fetchDramaTvShows: `/tv/drama`,
-    // fetchMysteryTvShows: `/tv/mystery`,
-    getTvShowsDetails: (id) => `/tv/${id}`,
+    fetchActionTvShows: "/api/tvshows/action",
+    fetchComedyTvShows: "/api/tvshows/comedy",
+    fetchCrimeTvShows: "/api/tvshows/crime",
+    fetchDramaTvShows: "/api/tvshows/drama",
+    fetchMysteryTvShows: "/api/tvshows/mystery",
+    getTvShowsDetails: (id) => `/api/tvshows/${id}`,
     //User
-    addToWishList: "/user/wishlist",
-    getWishList: "/user/wishlist",
+    addToWishList: "/api/user/wishlist",
+    getWishList: "/api/user/wishlist",
     //Payments
-    payment: "/payment/order",
-    updatePremium: "/payment/update_premium_access",
+    payment: "/api/payment/order",
+    updatePremium: "/api/payment/update_premium_access",
     //Streaming
-    fetchAllStreamingVideos: "/video",
-    fetchStreamingVideo: (id) => `/video?id=${id}`,
-    fetchVideoThumbnail: (id) => `/video/thumbnail?videoId=${id}`
+    fetchAllStreamingVideos: "/api/video",
+    fetchStreamingVideo: (id) => `/api/video?id=${id}`,
+    fetchVideoThumbnail: (id) => `/api/video/thumbnail?videoId=${id}`
 }
 
-export const TMDB_API_BASE_URL = process.env.TMDB_API_BASE_URL;
-export const TMDB_API_KEY = process.env.TMDB_API_KEY;
+export const api = axios.create({
+  baseURL: API_BASE,
+});
 
 export const media = (path) => `https://image.tmdb.org/t/p/original` + path;
 
 export const getStreamingVideoThumbnail = (id) =>
-  TMDB_API_BASE_URL + ENDPOINT.fetchVideoThumbnail(id);
-
-export const api = axios.create({
-  baseURL: TMDB_API_BASE_URL,
-  params: {
-    api_key: TMDB_API_KEY, 
-  },
-});
+  ENDPOINT.fetchVideoThumbnail(id);
 

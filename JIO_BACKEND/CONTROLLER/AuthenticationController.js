@@ -19,37 +19,39 @@ const HtmlTemplateString = fs.readFileSync(pathToOtpHTML, "utf-8");
 async function signUpHandler(req, res) {
     try {
         const userObject = req.body;
-        
+        // Check for required fields
         if(!userObject.email || !userObject.password) {
             return res.status(400).json({
                 message: 'Email or password is missing',
                 status: "failure"
             });
         }
-        
+        // Check confirmPassword match
+        if(userObject.confirmPassword !== userObject.password) {
+            return res.status(400).json({
+                message: 'Passwords do not match',
+                status: "failure"
+            });
+        }
         const user = await UserModel.findOne({ email:  userObject.email });
-        
         if(user){
             return res.status(400).json({
                 message: 'User already exists',
                 status: "failure"
             });
         }
-
         const saltRounds = 10; 
         const hashedPassword = await bcrypt.hash(userObject.password, saltRounds);
-
         const newUserObject = {
             ...userObject,
             password: hashedPassword,
         };
-        
         const newUser = await UserModel.create(newUserObject);
-        
+        // Return user under 'user' key for frontend compatibility
         res.status(201).json({
             message: 'User created successfully',
             status: "success",
-            data: {
+            user: {
                 email: newUser.email,
                 name: newUser.name, 
                 _id: newUser._id,
@@ -103,7 +105,8 @@ async function loginHandler(req, res) {
 
 async function logoutHandler(req, res) {
     try{
-        res.clearCookie('jwt', {path : '/'});
+        // Fix cookie name to match loginHandler
+        res.clearCookie('JWT', {path : '/'});
         res.json({
             message: 'User logged out successfully',
             status: "success"

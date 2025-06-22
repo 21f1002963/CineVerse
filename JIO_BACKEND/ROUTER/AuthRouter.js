@@ -1,5 +1,5 @@
 const express = require('express');
-const { body, sanitizeBody } = require('express-validator');
+const { body, validationResult } = require('express-validator');
 const authRouter = express.Router();
 
 const { signUpHandler, loginHandler, protectRouteMiddleWare, logoutHandler, profileHandler, forgetPasswordHandler, resetPasswordHandler } = require('../CONTROLLER/AuthenticationController.js');
@@ -31,8 +31,16 @@ const { signUpHandler, loginHandler, protectRouteMiddleWare, logoutHandler, prof
 authRouter.post(
   "/signup",
   [body('email').isEmail().normalizeEmail(), body('password').isLength({ min: 10 }).trim().escape()],
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ message: 'Invalid signup data', errors: errors.array() });
+    }
+    next();
+  },
   signUpHandler
-)
+);
+
 /**
  * @swagger
  * /api/auth/login:
@@ -56,15 +64,24 @@ authRouter.post(
  *       400:
  *         description: Bad request
  */
-.post(
+authRouter.post(
   "/login",
   // rateLimit({ windowMs: 15 * 60 * 1000, max: 10 }), // Uncomment and configure as needed
-  [body('email').isEmail().normalizeEmail(), body('password').isLength({ min: 10 }).trim().escape()],
+  [body('email').isEmail().normalizeEmail(), body('password').isLength({ min: 1 }).trim().escape()], // Allow any password length for login
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ message: 'Invalid login data', errors: errors.array() });
+    }
+    console.log('Login route hit');
+    next();
+  },
   loginHandler
-)
-.get("/logout", logoutHandler)
-.get("/profile", protectRouteMiddleWare, profileHandler)
-.patch("/forgetPassword", forgetPasswordHandler)
-.patch("/resetPassword", resetPasswordHandler)
+);
+
+authRouter.get("/logout", logoutHandler);
+authRouter.get("/profile", protectRouteMiddleWare, profileHandler);
+authRouter.patch("/forgetPassword", forgetPasswordHandler);
+authRouter.patch("/resetPassword", resetPasswordHandler);
 
 module.exports = authRouter;

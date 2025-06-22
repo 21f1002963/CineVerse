@@ -38,19 +38,24 @@ export default function LoginPage() {
     setLoading(true);
     try {
       if (email.length === 0 || password.length === 0) {
-        toast({ title: "Please fill all fields" });
+        toast({ title: "Please fill all fields", variant: 'destructive' });
+        setLoading(false);
+        return;
       }
       const res = await api.post(ENDPOINT.login, {
         email: email,
         password: password,
       });
-      if (res.data.status === "success") {
-        dispatch(userLoggedInDetails(res.data.message));
+      if (res.data.status === "Success" || res.data.status === "success") {
+        dispatch(userLoggedInDetails(res.data.user || res.data.message));
         router.push("/");
+        toast({ title: "Login successful!" });
+      } else {
+        toast({ title: res.data.message || "Login failed", variant: 'destructive' });
       }
     } catch (err) {
       console.log("err: ", err);
-      toast({ title: "Invalid credentials", variant: 'destructive' });
+      toast({ title: err.response?.data?.message || "Invalid credentials", variant: 'destructive' });
     } finally {
       setLoading(false);
     }
