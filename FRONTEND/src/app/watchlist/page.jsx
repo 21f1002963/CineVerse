@@ -8,11 +8,28 @@ import { api, ENDPOINT } from "@/lib/api";
 import { cn } from "@/lib/utils";
 import { FolderLockIcon } from "lucide-react";
 import Link from "next/link";
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect } from "react";
 import { useSelector } from "react-redux";
 
 const WatchListPage = (props) => {
   const userData = useSelector((state) => state.user);
+
+  useEffect(() => {
+    console.log("Watchlist - User data:", userData);
+    console.log("Watchlist - isLoggedIn:", userData.isLoggedIn);
+  }, [userData]);
+
+  const wishlistFetcher = async () => {
+    try {
+      console.log("Watchlist - Fetching wishlist data...");
+      const res = await api.get(ENDPOINT.getWishList);
+      console.log("Watchlist - API response:", res.data);
+      return res.data.data;
+    } catch (error) {
+      console.error("Watchlist - Error fetching wishlist:", error);
+      return [];
+    }
+  };
 
   return (
     <div className="mt-[80px] p-4">
@@ -20,10 +37,7 @@ const WatchListPage = (props) => {
       {userData.isLoggedIn ? (
         <Suspense fallback={<CategoryListFallback />}>
           <CategoryList
-            fetcher={async () => {
-              const res = await api.get(ENDPOINT.getWishList);
-              return res.data.data;
-            }}
+            fetcher={wishlistFetcher}
             className="flex-wrap"
           />
         </Suspense>

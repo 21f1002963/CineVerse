@@ -264,7 +264,7 @@ async function profileHandler(req, res) {
 // MIDDLEWARES
 async function protectRouteMiddleWare(req, res, next) {
         try{
-            const jwttoken = req.cookies.jwt;
+            const jwttoken = req.cookies.JWT;
             
             if(!jwttoken) {
                 return res.status(401).json({

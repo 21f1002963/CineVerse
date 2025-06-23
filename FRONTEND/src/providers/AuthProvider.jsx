@@ -13,14 +13,21 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
+        console.log("AuthProvider - Checking authentication...");
         const res = await api.get(ENDPOINT.user);
+        console.log("AuthProvider - API response:", res.data);
         if (res.data.status === "success") {
+          console.log("AuthProvider - User is logged in, dispatching user data");
           dispatch(userLoggedInDetails(res.data.user));
+        } else {
+          console.log("AuthProvider - API response status is not success:", res.data.status);
         }
       } catch (err) {
         // Only log non-401 errors (401 is expected for unauthenticated users)
         if (err.response?.status !== 401) {
           console.log("Authentication check failed:", err);
+        } else {
+          console.log("AuthProvider - User is not authenticated (401 response)");
         }
         // This is normal for unauthenticated users - no action needed
       } finally {

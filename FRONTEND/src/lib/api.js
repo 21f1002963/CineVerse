@@ -45,6 +45,7 @@ export const ENDPOINT= {
 
 export const api = axios.create({
   baseURL: API_BASE,
+  withCredentials: true,
 });
 
 export const media = (path) => `https://image.tmdb.org/t/p/original` + path;

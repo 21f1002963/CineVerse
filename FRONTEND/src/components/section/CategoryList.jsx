@@ -15,7 +15,9 @@ const CategoryList = ({ fetcher, className }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        console.log("CategoryList - Calling fetcher...");
         const data = await fetcher();
+        console.log("CategoryList - Received data:", data);
         setCategoryPost(data || []);
       } catch (error) {
         console.error("Error fetching category data:", error);
