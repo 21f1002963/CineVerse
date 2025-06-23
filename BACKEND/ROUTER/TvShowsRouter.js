@@ -3,7 +3,12 @@ const router = express.Router();
 const {
     getPopular,
     getTopRated,
-    getTvShowDetails
+    getTvShowDetails,
+    getActionTvShows,
+    getComedyTvShows,
+    getCrimeTvShows,
+    getDramaTvShows,
+    getMysteryTvShows
 } = require('../CONTROLLER/TvShowsController');
 
 // Example: TV Shows List
@@ -12,25 +17,20 @@ router.get('/', (req, res) => {
 });
 
 // Action
-router.get('/action', (req, res) => {
-  res.json({ message: 'Action TV shows endpoint is working!' });
-});
+router.get('/action', getActionTvShows);
+
 // Comedy
-router.get('/comedy', (req, res) => {
-  res.json({ message: 'Comedy TV shows endpoint is working!' });
-});
+router.get('/comedy', getComedyTvShows);
+
 // Crime
-router.get('/crime', (req, res) => {
-  res.json({ message: 'Crime TV shows endpoint is working!' });
-});
+router.get('/crime', getCrimeTvShows);
+
 // Drama
-router.get('/drama', (req, res) => {
-  res.json({ message: 'Drama TV shows endpoint is working!' });
-});
+router.get('/drama', getDramaTvShows);
+
 // Mystery
-router.get('/mystery', (req, res) => {
-  res.json({ message: 'Mystery TV shows endpoint is working!' });
-});
+router.get('/mystery', getMysteryTvShows);
+
 // TV Show Details
 router.get('/:id', getTvShowDetails);
 

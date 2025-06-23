@@ -1,6 +1,8 @@
+"use client";
+
 import ListingSection from '@/components/section/Listing_section'
 import { api, ENDPOINT } from '@/lib/api';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 // Add retry mechanism for API calls
 const fetchWithRetry = async (endpoint, retries = 3) => {
@@ -18,9 +20,26 @@ const fetchWithRetry = async (endpoint, retries = 3) => {
   }
 };
 
-export const revalidate = 3600; // Revalidate data every hour
-
 const TvShows = () => {
+  const [bannerData, setBannerData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchBannerData = async () => {
+      try {
+        const data = await fetchWithRetry(ENDPOINT.fetchMysteryTvShows);
+        setBannerData(data);
+      } catch (error) {
+        console.error("Error fetching banner data:", error);
+        setBannerData([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBannerData();
+  }, []);
+
   const list = [
     {
       label: "Comedy",
@@ -44,16 +63,19 @@ const TvShows = () => {
     },
   ];
 
-  const getBannerData = async () => {
-    return await fetchWithRetry(ENDPOINT.fetchMysteryTvShows);
-  };
+  if (loading) {
+    return (
+      <div className="w-full h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-white"></div>
+      </div>
+    );
+  }
 
   return (
     <main>
       <ListingSection 
-        bannerFetcher={getBannerData} 
+        bannerData={bannerData} 
         list={list}
-        fallbackData={[]}
       />
     </main>
   );
