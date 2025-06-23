@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { api, ENDPOINT, getStreamingVideoThumbnail } from "@/lib/api";
+import { cn } from "@/lib/utils";
 import Link from "next/link";
 import Image from "next/image";
 import { PlayCircleIcon } from "lucide-react";
