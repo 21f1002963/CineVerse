@@ -1,6 +1,7 @@
 import ListingSection from "@/components/section/Listing_section";
 import { api, ENDPOINT } from "@/lib/api";
 
+
 export default function Home() {
   // Safely define list with proper error handling
   const list = [

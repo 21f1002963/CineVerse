@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const API_BASE = typeof window === "undefined"
-  ? process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000"
-  : "";
+  ? process.env.NEXT_PUBLIC_API_BASE_URL 
+  : process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export const ENDPOINT= {
     //Auth

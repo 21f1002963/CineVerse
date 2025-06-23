@@ -1,13 +1,13 @@
 const axios = require('axios');
 
-const TMDB_API_KEY = process.env.TMDB_API_KEY;
+const TMDB_BEARER_TOKEN = process.env.TMDB_BEARER_TOKEN;
 const TMDB_BASE_URL = "https://api.themoviedb.org/3";
 
 const tmdbAPI = axios.create({
     baseURL: TMDB_BASE_URL,
-    params: {
-        api_key: TMDB_API_KEY,
-        language: 'en-US'
+    headers: {
+        "accept": "application/json",
+        "Authorization": `Bearer ${TMDB_BEARER_TOKEN}`
     }
 });
 
@@ -17,7 +17,8 @@ const TMDB_ENDPOINT = {
     popularMovies: "/movie/popular",
     topRatedMovies: "/movie/top_rated",
     upcomingMovies: "/movie/upcoming",
-    trendingMovies: "/trending/movie/week",
+    trendingMovies: "/trending/movie/day",
+    
     movieDetails: (id) => `/movie/${id}`,
     movieCredits: (id) => `/movie/${id}/credits`,
     movieImages: (id) => `/movie/${id}/images`,
