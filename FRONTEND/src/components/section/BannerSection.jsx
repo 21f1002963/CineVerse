@@ -1,3 +1,5 @@
+"use client";
+
 import { media } from "@/lib/api";
 import React from "react";
 import {
@@ -12,8 +14,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { getWatchUrl } from "@/lib/utils";
 
-const BannerSection = async ({ fetcher }) => {
-  const trendingPosts = await fetcher();
+const BannerSection = ({ data }) => {
+  const trendingPosts = data || [];
+
+  if (!trendingPosts.length) {
+    return <BannerSectionFallback />;
+  }
 
   return (
     <Carousel

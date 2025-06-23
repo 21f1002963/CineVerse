@@ -1,3 +1,5 @@
+"use client";
+
 import ListingSection from "@/components/section/Listing_section";
 import { api, ENDPOINT } from "@/lib/api";
 
@@ -14,19 +16,6 @@ export default function Home() {
           return response.data?.data.results || [];
         } catch (error) {
           console.error("Error fetching trending movies:", error);
-          return [];
-        }
-      },
-    },
-    {
-      label: "Top Rated Movies",
-      href: "top_rated",
-      fetcher: async () => {
-        try {
-          const response = await api.get(ENDPOINT.discoverTopRated("movie"));
-          return response.data?.data.results || [];
-        } catch (error) {
-          console.error("Error fetching top rated movies:", error);
           return [];
         }
       },

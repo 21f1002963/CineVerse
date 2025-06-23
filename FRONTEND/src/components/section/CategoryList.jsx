@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import { media } from "@/lib/api";
 import Image from "next/image";
 import { Skeleton } from "../ui/skeleton";
@@ -6,8 +8,30 @@ import Link from "next/link";
 import { cn, getWatchUrl } from "@/lib/utils";
 import { InboxIcon } from "lucide-react";
 
-const CategoryList = async ({ fetcher, className }) => {
-  const categoryPost = await fetcher();
+const CategoryList = ({ fetcher, className }) => {
+  const [categoryPost, setCategoryPost] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await fetcher();
+        setCategoryPost(data || []);
+      } catch (error) {
+        console.error("Error fetching category data:", error);
+        setCategoryPost([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [fetcher]);
+
+  if (loading) {
+    return <CategoryListFallback />;
+  }
+
   if (!categoryPost || categoryPost.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center w-full h-[80vh] py-12">
@@ -19,6 +43,7 @@ const CategoryList = async ({ fetcher, className }) => {
       </div>
     );
   }
+
   return (
     <ul
       className={cn(

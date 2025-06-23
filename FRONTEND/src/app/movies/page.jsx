@@ -1,9 +1,8 @@
+"use client";
+
 import ListingSection from "@/components/section/Listing_section";
 import { api, ENDPOINT } from "@/lib/api";
-import React from "react";
-
-// Cache API responses or set revalidation time
-export const revalidate = 3600; // Revalidate every hour
+import React, { useEffect, useState } from "react";
 
 // Generic error handler for API calls
 const safeFetch = async (endpoint) => {
@@ -17,6 +16,25 @@ const safeFetch = async (endpoint) => {
 };
 
 const MoviesPage = () => {
+  const [bannerData, setBannerData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchBannerData = async () => {
+      try {
+        const data = await safeFetch(ENDPOINT.fetchAnimeMovies);
+        setBannerData(data);
+      } catch (error) {
+        console.error("Error fetching banner data:", error);
+        setBannerData([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBannerData();
+  }, []);
+
   const list = [
     {
       label: "Top Comedy Movies",
@@ -40,13 +58,17 @@ const MoviesPage = () => {
     },
   ];
 
-  const getBannerData = async () => {
-    return await safeFetch(ENDPOINT.fetchAnimeMovies);
-  };
+  if (loading) {
+    return (
+      <div className="w-full h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-white"></div>
+      </div>
+    );
+  }
 
   return (
     <main>
-      <ListingSection bannerFetcher={getBannerData} list={list} />
+      <ListingSection bannerData={bannerData} list={list} />
     </main>
   );
 };

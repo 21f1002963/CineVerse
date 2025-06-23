@@ -15,7 +15,7 @@ const TMDB_ENDPOINT = {
     // Movies
     nowPlayingMovies: "/movie/now_playing",
     popularMovies: "/movie/popular",
-    topRatedMovies: "/movie/top_rated",
+    topRatedMovies: "/discover/movie",
     upcomingMovies: "/movie/upcoming",
     trendingMovies: "/trending/movie/day",
     

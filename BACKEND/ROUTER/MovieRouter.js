@@ -5,7 +5,12 @@ const {
     getTopRated,
     getUpcoming,
     getNowPlaying,
-    getMovieDetails
+    getMovieDetails,
+    getActionMovies,
+    getComedyMovies,
+    getHorrorMovies,
+    getRomanceMovies,
+    getAnimeMovies
 } = require('../CONTROLLER/MovieController');
 
 // Example movie route
@@ -26,29 +31,19 @@ router.get('/top_rated', getTopRated);
 router.get('/upcoming', getUpcoming);
 
 // Action
-router.get('/action', (req, res) => {
-  res.json({ message: 'Action movies endpoint is working!' });
-});
+router.get('/action', getActionMovies);
 
 // Comedy
-router.get('/comedy', (req, res) => {
-  res.json({ message: 'Comedy movies endpoint is working!' });
-});
+router.get('/comedy', getComedyMovies);
 
 // Horror
-router.get('/horror', (req, res) => {
-  res.json({ message: 'Horror movies endpoint is working!' });
-});
+router.get('/horror', getHorrorMovies);
 
 // Romance
-router.get('/romance', (req, res) => {
-  res.json({ message: 'Romance movies endpoint is working!' });
-});
+router.get('/romance', getRomanceMovies);
 
 // Anime
-router.get('/anime', (req, res) => {
-  res.json({ message: 'Anime movies endpoint is working!' });
-});
+router.get('/anime', getAnimeMovies);
 
 // Movie Details
 router.get('/:id', getMovieDetails);

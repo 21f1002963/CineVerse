@@ -3,7 +3,7 @@ import React, { Suspense } from "react";
 import BannerSection, { BannerSectionFallback } from "./BannerSection";
 import CategorySection from "./CategoriesSection";
 
-const ListingSection = ({ bannerFetcher, list }) => {
+const ListingSection = ({ bannerData, list }) => {
   return (
     <section>
       {/* Quick links chips  */}
@@ -21,7 +21,7 @@ const ListingSection = ({ bannerFetcher, list }) => {
       {/* Banner/Hero Section  */}
       <div>
         <Suspense fallback={<BannerSectionFallback />}>
-          <BannerSection fetcher={bannerFetcher} />
+          <BannerSection data={bannerData} />
         </Suspense>
       </div>
       {/* Category Section */}

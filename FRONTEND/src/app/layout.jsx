@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
   return (
     <StoreProvider>
       <html lang="en" className="scroll-smooth">
-        <body className={inter.className}>
+        <body className={inter.className} suppressHydrationWarning={true}>
           <AuthProvider>
             <Header />
             {children}
