@@ -16,8 +16,12 @@ import { getWatchUrl } from "@/lib/utils";
 
 const BannerSection = ({ data }) => {
   const trendingPosts = data || [];
+  
+  console.log("BannerSection received data:", data);
+  console.log("trendingPosts:", trendingPosts);
 
   if (!trendingPosts.length) {
+    console.log("No trending posts, showing fallback");
     return <BannerSectionFallback />;
   }
 

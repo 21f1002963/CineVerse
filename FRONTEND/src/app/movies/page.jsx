@@ -8,6 +8,7 @@ import React, { useEffect, useState } from "react";
 const safeFetch = async (endpoint) => {
   try {
     const response = await api.get(endpoint);
+    console.log(`API Response for ${endpoint}:`, response.data);
     return response.data?.data?.results || []; // Fallback to empty array
   } catch (error) {
     console.error(`Failed to fetch ${endpoint}:`, error);
@@ -22,7 +23,9 @@ const MoviesPage = () => {
   useEffect(() => {
     const fetchBannerData = async () => {
       try {
+        console.log("Fetching banner data from:", ENDPOINT.fetchAnimeMovies);
         const data = await safeFetch(ENDPOINT.fetchAnimeMovies);
+        console.log("Banner data received:", data);
         setBannerData(data);
       } catch (error) {
         console.error("Error fetching banner data:", error);
