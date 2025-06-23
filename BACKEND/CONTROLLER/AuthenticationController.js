@@ -40,13 +40,7 @@ async function signUpHandler(req, res) {
                 status: "failure"
             });
         }
-        const saltRounds = 10; 
-        const hashedPassword = await bcrypt.hash(userObject.password, saltRounds);
-        const newUserObject = {
-            ...userObject,
-            password: hashedPassword,
-        };
-        const newUser = await UserModel.create(newUserObject);
+        const newUser = await UserModel.create(userObject);
         // Return user under 'user' key for frontend compatibility
         res.status(201).json({
             message: 'User created successfully',
@@ -68,32 +62,22 @@ async function signUpHandler(req, res) {
 async function loginHandler(req, res) {
     try{
         const { email, password } = req.body;
-        let user = await UserModel.findOne({ email: email });
+        let user = await UserModel.findOne({ email: email }).select("+password");
         
-        if(!user){
-            return res.status(400).json({
+        if(!user || !(await bcrypt.compare(password,user.password))){
+            return res.status(401).json({
                 message: 'Invalid user or password',
                 status: "Failure"
             });
         }
         
-        if (user) {
-            let areEqual = await bcrypt.compare(password,user.password);
-            if (areEqual) {
-                let token = await promisifiedJWTSign({ id: user["_id"] }, JWT_SECRET);
-                res.cookie("JWT", token, { maxAge: 90000000, httpOnly: true, path: "/" });
-                res.status(200).json({
-                    message: 'User logged in successfully',
-                    status: "Success",
-                    user: user
-                })
-            } else {
-                res.status(404).json({
-                    status: "Failure",
-                    message: "Email or Password is incorrect"
-                })
-            }
-        }
+        let token = await promisifiedJWTSign({ id: user["_id"] }, JWT_SECRET);
+        res.cookie("JWT", token, { maxAge: 90000000, httpOnly: true, path: "/" });
+        res.status(200).json({
+            message: 'User logged in successfully',
+            status: "Success",
+            user: user
+        })
             
     } catch(error) {
             res.status(500).json({

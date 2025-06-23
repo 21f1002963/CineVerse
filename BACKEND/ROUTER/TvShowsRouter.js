@@ -1,5 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const {
+    getPopular,
+    getTopRated,
+    getTvShowDetails
+} = require('../CONTROLLER/TvShowsController');
 
 // Example: TV Shows List
 router.get('/', (req, res) => {
@@ -27,8 +32,9 @@ router.get('/mystery', (req, res) => {
   res.json({ message: 'Mystery TV shows endpoint is working!' });
 });
 // TV Show Details
-router.get('/:id', (req, res) => {
-  res.json({ message: `TV show details for id ${req.params.id}` });
-});
+router.get('/:id', getTvShowDetails);
+
+router.get('/popular', getPopular);
+router.get('/top_rated', getTopRated);
 
 module.exports = router;

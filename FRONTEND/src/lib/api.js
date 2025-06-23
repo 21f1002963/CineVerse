@@ -14,9 +14,10 @@ export const ENDPOINT= {
     resetPassword: "/api/auth/resetpassword",
     //Discover
     discoverNowPlaying: "/api/movies/now_playing",
-    discoverPopular: "/api/movies/popular",
-    discoverTopRated: "/api/discover/top_rated",
-    discoverTrending: "/api/discover/trending",
+    discoverPopular: (media_type) => `/api/discover/popular/${media_type}`,
+    discoverTopRated: (media_type) => `/api/discover/top_rated/${media_type}`,
+    discoverTrending: (media_type) => `/api/discover/trending/${media_type}`,
+    discoverGenres: (media_type) => `/api/discover/genres/${media_type}`,
     discoverUpcoming: "/api/movies/upcoming",
     //Movies
     fetchActionMovies: "/api/movies/action",

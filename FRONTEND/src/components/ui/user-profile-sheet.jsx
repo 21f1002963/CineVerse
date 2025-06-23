@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { userLoggedOutDetails } from "@/redux/userSlice";
 import { api, ENDPOINT } from "@/lib/api";
 import { navLinks } from "./header";
+import { toast } from "./use-toast";
 
 const UserProfileSheet = () => {
   const [open, setOpen] = useState(false);
@@ -23,6 +24,7 @@ const UserProfileSheet = () => {
       if (res.data.status === "success") {
         dispatch(userLoggedOutDetails());
         router.push("/");
+        toast({ title: "Logout successful!" });
       }
     } catch (err) {
       console.log("err: ", err);

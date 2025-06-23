@@ -38,9 +38,7 @@ export default function LoginForm() {
         confirmPassword: confirmPassword,
       });
       if (res.data.status === "success") {
-        dispatch(userLoggedInDetails(res.data.user)); // Use 'user' from backend
-        router.push("/");
-        toast({ title: "Account Created!" });
+        router.push("/signup-success");
       } else {
         toast({
           title: res.data.message || "Signup failed",

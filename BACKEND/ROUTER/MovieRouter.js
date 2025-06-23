@@ -1,5 +1,12 @@
 const express = require('express');
 const router = express.Router();
+const {
+    getPopular,
+    getTopRated,
+    getUpcoming,
+    getNowPlaying,
+    getMovieDetails
+} = require('../CONTROLLER/MovieController');
 
 // Example movie route
 router.get('/', (req, res) => {
@@ -7,24 +14,16 @@ router.get('/', (req, res) => {
 });
 
 // Now Playing
-router.get('/now_playing', (req, res) => {
-  res.json({ message: 'Now playing movies endpoint is working!' });
-});
+router.get('/now_playing', getNowPlaying);
 
 // Popular
-router.get('/popular', (req, res) => {
-  res.json({ message: 'Popular movies endpoint is working!' });
-});
+router.get('/popular', getPopular);
 
 // Top Rated
-router.get('/top_rated', (req, res) => {
-  res.json({ message: 'Top rated movies endpoint is working!' });
-});
+router.get('/top_rated', getTopRated);
 
 // Upcoming
-router.get('/upcoming', (req, res) => {
-  res.json({ message: 'Upcoming movies endpoint is working!' });
-});
+router.get('/upcoming', getUpcoming);
 
 // Action
 router.get('/action', (req, res) => {
@@ -52,8 +51,6 @@ router.get('/anime', (req, res) => {
 });
 
 // Movie Details
-router.get('/:id', (req, res) => {
-  res.json({ message: `Movie details for id ${req.params.id}` });
-});
+router.get('/:id', getMovieDetails);
 
 module.exports = router;
