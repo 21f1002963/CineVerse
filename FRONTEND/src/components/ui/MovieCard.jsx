@@ -2,6 +2,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { media } from '@/lib/api';
+import { getWatchUrl } from '@/lib/utils';
 
 const MovieCard = ({ data }) => {
     if (!data || !data.poster_path) {
@@ -9,7 +10,7 @@ const MovieCard = ({ data }) => {
     }
 
     return (
-        <Link href={`/${data.media_type}/watch?id=${data.id}`}>
+        <Link href={getWatchUrl(data.id, data.media_type)}>
             <div className="rounded-lg overflow-hidden transform transition-transform hover:scale-105 relative">
                 <Image
                     src={media(data.poster_path)}

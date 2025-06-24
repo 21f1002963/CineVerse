@@ -6,6 +6,6 @@ export function cn(...inputs) {
 }
 
 export function getWatchUrl(vidId, mediaType) {
-  const prefix = mediaType === "tv" ? "tv" : "movies";
+  const prefix = mediaType === "tv" ? "tv" : "movie";
   return `${prefix}/watch?id=${vidId}`;
 }
