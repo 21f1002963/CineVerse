@@ -1,6 +1,3 @@
-import pkg from '@netlify/next';
-const { withNetlify } = pkg;
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
@@ -17,10 +14,11 @@ const nextConfig = {
     return [
       {
         source: '/api/:path*',
-        destination: 'http://localhost:5000/api/:path*',
+        destination: 'https://cineverse-8qbv.onrender.com/api/:path*',
       },
     ];
   },
+  distDir: '.next',
 };
 
-export default withNetlify(nextConfig);
+export default nextConfig;
