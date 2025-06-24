@@ -1,4 +1,4 @@
-const otpGenerator = require('../UTILITY/OTPGenerator');
+const OtpGenerator = require('../UTILITY/OtpGenerator');
 const { JWT_SECRET } = process.env;
 const UserModel = require('../MODEL/UserModel');
 const emailSender = require('../UTILITY/DynamicEmailSender');
@@ -124,7 +124,7 @@ async function forgetPasswordHandler(req, res){
             });
         }
 
-        const otp = otpGenerator();
+        const otp = OtpGenerator();
         await UserModel.findOneAndUpdate(
             { email: email },
             {
