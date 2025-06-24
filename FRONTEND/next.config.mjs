@@ -1,5 +1,5 @@
-import netlifyNext from "@netlify/next";
-const withNetlify = netlifyNext.withNetlify || netlifyNext.default || netlifyNext;
+const netlifyNext = await import('@netlify/next');
+const withNetlify = netlifyNext.default;
 
 // 
 /** @type {import('next').NextConfig} */
