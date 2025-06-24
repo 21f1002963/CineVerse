@@ -31,7 +31,7 @@ const BannerSection = ({ data }) => {
         align: "center",
         loop: true,
       }}
-      className="w-full px-4 md:px-0"
+      className="w-full px-4 md:px-0 group relative"
     >
       <CarouselContent className="">
         {trendingPosts?.map((vid) => (
@@ -49,10 +49,9 @@ const BannerSection = ({ data }) => {
           </CarouselItem>
         ))}
       </CarouselContent>
-      <div className="absolute bottom-4 right-[12%] hidden md:flex">
-        <CarouselPrevious className="w-[60px] h-[60px]" />
-        <CarouselNext className="w-[60px] h-[60px] ml-2" />
-      </div>
+      
+      <CarouselPrevious className="absolute left-2 top-1/2 -translate-y-1/2 z-10 h-12 w-12 rounded-full bg-black/50 text-white opacity-0 transition-opacity group-hover:opacity-100 disabled:hidden" />
+      <CarouselNext className="absolute right-2 top-1/2 -translate-y-1/2 z-10 h-12 w-12 rounded-full bg-black/50 text-white opacity-0 transition-opacity group-hover:opacity-100 disabled:hidden" />
     </Carousel>
   );
 };

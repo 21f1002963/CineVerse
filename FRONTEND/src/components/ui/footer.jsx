@@ -49,10 +49,10 @@ const connectWithUsLinks = [
 
 export default function Footer() {
   return (
-    <footer className="bg-[#17181a] text-gray-300">
+    <footer className="bg-[#17181a] text-gray-300 mt-10">
       <div className="md:mx-auto">
         <div className="flex flex-col md:flex-row md:justify-between md:items-start px-8 py-4">
-          <div className="flex flex-col md:flex-row md:items-center gap-8 md:gap-16 mt-8">
+          <div className="flex flex-col md:flex-row md:items-center gap-8 md:gap-16 mt-6">
             {headings?.map((heading, index) => (
               <div key={index} className="flex flex-col gap-4">
                 <h3 className="text-lg font-bold uppercase">{heading.title}</h3>

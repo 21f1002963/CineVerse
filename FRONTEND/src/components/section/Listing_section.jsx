@@ -2,24 +2,16 @@ import Link from "next/link";
 import React, { Suspense } from "react";
 import BannerSection, { BannerSectionFallback } from "./BannerSection";
 import CategorySection from "./CategoriesSection";
+import QuickLinks from "./QuickLinks";
 
 const ListingSection = ({ bannerData, list }) => {
   return (
     <section>
       {/* Quick links chips  */}
-      <div className="p-6 flex gap-4 mt-[64px] text-nowrap overflow-scroll scrollbar-hide">
-        {list?.map((item) => (
-          <Link
-            key={item.href}
-            className="px-3 py-2 rounded-full bg-white/15 text-sm"
-            href={`#${item.href}`}
-          >
-            {item.label}
-          </Link>
-        ))}
-      </div>
+      <QuickLinks list={list} />
+
       {/* Banner/Hero Section  */}
-      <div>
+      <div className="mt-2">
         <Suspense fallback={<BannerSectionFallback />}>
           <BannerSection data={bannerData} />
         </Suspense>
@@ -30,7 +22,7 @@ const ListingSection = ({ bannerData, list }) => {
           key={item.label}
           id={item.href}
           title={item.label}
-          fetcher={item.fetcher}
+          data={item.data}
         />
       ))}
     </section>
