@@ -9,16 +9,11 @@ const nextConfig = {
         pathname: '/t/p/**',
       },
     ],
+    unoptimized: true, // Required for static export
   },
-  async rewrites() {
-    return [
-      {
-        source: '/api/:path*',
-        destination: 'https://cineverse-8qbv.onrender.com/api/:path*',
-      },
-    ];
-  },
+  output: 'export',
   trailingSlash: true,
+  distDir: 'out',
 };
 
 export default nextConfig;
