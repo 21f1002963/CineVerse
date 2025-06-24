@@ -11,7 +11,7 @@ export const navLinks = [
   { name: "Movies", key: "movies", href: "/movies" },
   { name: "Tv Shows", key: "tv", href: "/tv" },
   { name: "Watchlist", key: "watchlist", href: "/watchlist" },
-  { name: "Jio+", key: "jio+", href: "/jio+" },
+  // { name: "Jio+", key: "jio+", href: "/jio+" },
 ];
 
 const Header = () => {
@@ -30,9 +30,9 @@ const Header = () => {
 
   return (
     <header className="bg-[#0d0e10] py-4 w-full fixed top-0 z-50  border-b-2 border-b-grey">
-      <div className="lg:mx-auto mx-2 lg:px-4 flex items-center text-nowrap">
+      <div className="lg:mx-auto mx-2 lg:px-4 flex items-center text-nowrap mr-4">
         <div className="flex items-center">
-          <Link href="/">
+          <Link href="/" className="mr-4">
             <Image
               src="/logo.svg"
               alt="JioCinema Logo"
@@ -41,15 +41,15 @@ const Header = () => {
               className="md:h-9 md:max-w-[136px] max-w-24"
             />
           </Link>
-          <Link
+          {/* <Link
             href="/subscription"
             className="ml-4 mr-4 md:px-4 px-4 py-1 font-medium rounded-3xl flex items-center gap-2 text-[#c1a362] border-[#c1a362] border text-sm md:text-base"
-          >
-            <Image src="/crown.svg" height={16} width={16} alt="crown" />
+          > */}
+            {/* <Image src="/crown.svg" height={16} width={16} alt="crown" />
             <span className="pr-4">
               {userData?.user?.isPremium ? "" : "Go "}Premium
             </span>
-          </Link>
+          </Link> */}
         </div>
         <nav className="lg:flex lg:space-x-4 space-x-0 hidden">
           {navLinks?.map((tab) => (
