@@ -1,0 +1,14 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[[redirects]]
+  from = "/api/*"
+  to = "https://cineverse-8qbv.onrender.com/api/:splat"
+  status = 200
+  force = false
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

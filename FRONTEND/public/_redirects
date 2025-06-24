@@ -1,1 +1,5 @@
+# API routes - proxy to your backend
+/api/*  https://cineverse-8qbv.onrender.com/api/:splat  200
+
+# SPA fallback for client-side routing
 /*    /index.html   200

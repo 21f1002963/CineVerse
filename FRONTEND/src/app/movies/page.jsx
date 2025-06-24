@@ -2,6 +2,9 @@ import ListingSection from "@/components/section/Listing_section";
 import { ENDPOINT } from "@/lib/api";
 import React from "react";
 
+// Force dynamic rendering to prevent static generation issues
+export const dynamic = 'force-dynamic';
+
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000";
 
 // Generic error handler for API calls
