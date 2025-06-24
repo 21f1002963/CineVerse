@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE = "https://cineverse-8qbv.onrender.com";
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || "https://cineverse-8qbv.onrender.com";
 
 export const ENDPOINT= {
     //Auth
