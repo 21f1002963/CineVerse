@@ -4,69 +4,54 @@ import React from "react";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || "https://cineverse-8qbv.onrender.com";
 
-// Generic error handler for API calls
 const safeFetch = async (endpoint) => {
   try {
-    // Using fetch with force-cache to leverage Next.js caching
     const response = await fetch(`${API_BASE}${endpoint}`, { cache: 'no-store' });
     if (!response.ok) {
-      // Log error for easier debugging
       console.error(`API request failed for ${endpoint} with status: ${response.status}`);
       return [];
     }
     const responseData = await response.json();
-    return responseData?.data?.results || []; // Fallback to empty array
+    return responseData?.data?.results || [];
   } catch (error) {
     console.error(`Failed to fetch ${endpoint}:`, error);
-    return []; // Return empty array on error
+    return [];
   }
 };
 
-const MoviesPage = async () => {
+export default async function Home() {
   const list = [
     {
-      label: "Top Comedy Movies",
-      href: "comedy",
-      endpoint: ENDPOINT.fetchComedyMovies,
+      label: "Trending Movies",
+      href: "trending",
+      endpoint: ENDPOINT.discoverTrending("movie"),
     },
     {
-      label: "Top Horror Movies",
-      href: "horror",
-      endpoint: ENDPOINT.fetchHorrorMovies,
-    },
-    {
-      label: "Top Romance Movies",
-      href: "romance",
-      endpoint: ENDPOINT.fetchRomanceMovies,
-    },
-    {
-      label: "Top Action Movies",
-      href: "action",
-      endpoint: ENDPOINT.fetchActionMovies,
+      label: "Popular Movies",
+      href: "popular",
+      endpoint: ENDPOINT.discoverPopular("movie"),
     },
   ];
 
-  // Fetch all data in parallel
   const [
     bannerData,
     ...categoryData
   ] = await Promise.all([
-    safeFetch(ENDPOINT.fetchAnimeMovies),
+    safeFetch(ENDPOINT.discoverTrending("movie")),
     ...list.map(item => safeFetch(item.endpoint))
   ]);
 
-  // Combine list definition with fetched data
   const listWithData = list.map((item, index) => ({
     ...item,
     data: categoryData[index],
   }));
 
-
   return (
     <main>
-      <ListingSection bannerData={bannerData} list={listWithData} />
+      <ListingSection 
+        bannerData={bannerData}
+        list={listWithData} 
+      />
     </main>
   );
-};
-
-export default MoviesPage;
+}
