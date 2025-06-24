@@ -1,7 +1,7 @@
 "use client";
 
 import { buttonVariants } from "@/components/ui/button";
-import { TMDB_API_BASE_URL } from "@/lib/api";
+import { api } from "@/lib/api";
 import { cn } from "@/lib/utils";
 import { FolderLockIcon } from "lucide-react";
 import Link from "next/link";
@@ -46,7 +46,7 @@ const JioPlusWatchPage = ({
 
   return (
     <video
-      src={TMDB_API_BASE_URL + `/video/watch/?id=${videoId}`}
+      src={`/api/video/watch/?id=${videoId}`}
       controls
       autoPlay
       muted

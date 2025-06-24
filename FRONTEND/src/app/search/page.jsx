@@ -37,7 +37,7 @@ const SearchPage = () => {
     if (loading) {
         return (
             <div className="container mx-auto px-4 py-8">
-                <h1 className="text-2xl font-bold text-white mb-4">Searching for "{query}"</h1>
+                <h1 className="text-2xl font-bold text-white mb-4">Searching for &quot;{query}&quot;</h1>
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
                     {[...Array(10)].map((_, i) => <Skeleton key={i} className="h-60 w-full" />)}
                 </div>
@@ -51,11 +51,11 @@ const SearchPage = () => {
     
     return (
         <div className="container mx-auto px-4 py-8 mt-20">
-            <h1 className="text-2xl font-bold text-white mb-4">Search Results for "{query}"</h1>
+            <h1 className="text-2xl font-bold text-white mb-4">Search Results for &quot;{query}&quot;</h1>
             {results.length > 0 ? (
                 <ListingSection data={results} />
             ) : (
-                <p className="text-white">No results found for "{query}".</p>
+                <p className="text-white">No results found for &quot;{query}&quot;.</p>
             )}
         </div>
     );
