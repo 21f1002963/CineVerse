@@ -54,32 +54,32 @@ const UserProfileSheet = () => {
           </div>
         )}
       </SheetTrigger>
-      <SheetContent side={"right"} className="px-6">
+      <SheetContent side={"right"} className="px-6 bg-white/10 backdrop-blur-lg shadow-2xl rounded-l-2xl border-0 min-w-[340px]">
         <SheetTitle className="sr-only">User Profile</SheetTitle>
         <SheetDescription className="sr-only">
           View and manage your user profile, subscription, and settings.
         </SheetDescription>
-        <div className="bg-slate-700/30 p-6 flex flex-col items-center gap-2 mt-[100px] rounded-lg">
+        <div className="bg-slate-700/40 p-8 flex flex-col items-center gap-3 mt-[50px] rounded-2xl shadow-lg">
           {!userData.isLoggedIn ? (
             <Image
               src="/profile.avif"
               alt="Profile Icon"
-              className="h-[100px] w-[100px] rounded-full -mt-[60px]"
-              width={40}
-              height={40}
+              className="h-[120px] w-[120px] rounded-full -mt-[70px] border-4 border-white/30 shadow-xl object-cover"
+              width={120}
+              height={120}
             />
           ) : (
-            <div className="relative h-[100px] w-[100px] rounded-full -mt-[60px] bg-[#0059A3] text-3xl font-bold flex items-center justify-center">
+            <div className="relative h-[120px] w-[120px] rounded-full -mt-[70px] bg-gradient-to-br from-pink-600 via-pink-400 to-pink-700 text-4xl font-extrabold flex items-center justify-center border-4 border-white/30 shadow-xl">
               {userData.user ? userData.user.name.charAt(0).toUpperCase() : ""}
             </div>
           )}
-          <p className="text-xl font-bold capitalize">
+          <p className="text-2xl font-extrabold capitalize text-white mt-2">
             {userData.isLoggedIn ? userData.user?.name : "Guest"}
           </p>
           {!userData.isLoggedIn ? (
             <Link
               href={"/login"}
-              className="rounded-full font-medium mt-4 text-base px-4 py-2 bg-pink-600"
+              className="rounded-full font-semibold mt-4 text-base px-6 py-2 bg-pink-600 hover:bg-pink-700 text-white shadow transition-all"
               onClick={() => {
                 setOpen(false);
               }}
@@ -87,10 +87,10 @@ const UserProfileSheet = () => {
               Login
             </Link>
           ) : (
-            <>
+            <div className="flex flex-col gap-2 w-full items-center mt-2">
               <Link
                 href="/resetPassword"
-                className="text-gray-500 hover:text-pink-500 hover:underline"
+                className="text-gray-300 hover:text-pink-400 hover:underline text-sm transition-all"
                 onClick={() => {
                   setOpen(false);
                 }}
@@ -98,31 +98,33 @@ const UserProfileSheet = () => {
                 Reset Password
               </Link>
               <button
-                className="rounded-full font-medium mt-4 text-base px-4 py-2 bg-pink-600"
+                className="rounded-full font-semibold mt-2 text-base px-6 py-2 bg-pink-600 hover:bg-pink-700 text-white shadow transition-all"
                 onClick={handleClick}
               >
                 Logout
               </button>
-            </>
+            </div>
           )}
         </div>
-        <div className="divide-y my-4">
-          <Link
+        <div className="my-6 border-t border-white/20" />
+        
+        <div className="divide-y divide-white/10 rounded-xl overflow-hidden bg-white/5 shadow">
+          {/* <Link
             href={"/subscription"}
-            className="flex items-center justify-between px-2 py-4 text-sm"
+            className="flex items-center justify-between px-4 py-4 text-base font-medium text-white hover:bg-pink-600/20 transition-all"
             onClick={() => {
               setOpen(false);
             }}
           >
             Subscribe Now
             <ChevronRightIcon className="w-6 h-6" />
-          </Link>
+          </Link> */}
           <div>
             {navLinks.map((link) => (
               <Link
                 href={link.href}
                 key={link.key}
-                className="flex items-center justify-between px-2 py-4 text-sm"
+                className="flex items-center justify-between px-4 py-4 text-base font-medium text-white hover:bg-pink-600/20 transition-all"
                 onClick={() => {
                   setOpen(false);
                 }}
@@ -132,13 +134,7 @@ const UserProfileSheet = () => {
               </Link>
             ))}
           </div>
-          <Link
-            href={"/"}
-            className="flex items-center justify-between px-2 py-4 text-sm"
-          >
-            Help and Legal
-            <ChevronRightIcon className="w-6 h-6" />
-          </Link>
+          
         </div>
       </SheetContent>
     </Sheet>
