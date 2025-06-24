@@ -20,12 +20,14 @@ export default function RootLayout({ children }) {
       <head>
         <link rel="icon" href="/cineverse-logo.svg" type="image/svg+xml" />
       </head>
-      <body className={inter.className} suppressHydrationWarning={true}>
+      <body className={`${inter.className} min-h-screen flex flex-col`} suppressHydrationWarning={true}>
         <StoreProvider>
           <AuthProvider>
             <NpProgressProvider />
             <Header />
-            {children}
+            <main className="flex-grow">
+              {children}
+            </main>
             <Footer />
             <Toaster />
           </AuthProvider>
