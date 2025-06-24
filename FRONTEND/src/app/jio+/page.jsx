@@ -39,7 +39,7 @@ export default function JioPlusPage() {
         {videos?.map((video, index) => (
           <Link
             key={index}
-            href={`jio+/watch?id=${video.id}`}
+            href={`/jio+/watch?id=${video.id}`}
             className="relative flex items-center justify-center"
           >
             <Image

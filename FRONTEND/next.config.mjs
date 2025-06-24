@@ -12,7 +12,6 @@ const nextConfig = {
     unoptimized: true,
   },
   output: 'export',
-  trailingSlash: true,
   distDir: 'out',
 };
 
