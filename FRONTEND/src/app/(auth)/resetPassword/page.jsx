@@ -69,7 +69,7 @@ const ResetPassword = () => {
       const res = await api.patch(ENDPOINT.resetPassword, {
         email,
         password: newPassword,
-        confirmPasword: confirmNewPassword,
+        confirmPassword: confirmNewPassword,
         otp,
       });
 

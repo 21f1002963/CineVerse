@@ -124,30 +124,24 @@ async function forgetPasswordHandler(req, res){
             });
         }
 
-        const OTP = OTPgenerator();
-        
-        const tempelateData = {name:user.name, OTP: user.otp}
-        
-        await emailSender("./TEMPLATES/OTP.html", user.email, tempelateData);
-
+        const otp = otpGenerator();
         await UserModel.findOneAndUpdate(
             { email: email },
             {
               $set: {
-                token: otp,
+                otp: otp,
                 otpExpiry: Date.now() + 1000 * 60 * 5, 
               },
             },
             { new: true }
         );
-        
+        const templateData = { name: user.name, OTP: otp };
+        await emailSender("./TEMPLATES/OTP.html", user.email, templateData);
+
         res.status(200).json({
             status: "success",
             message: 'OTP sent to email',
-            otp: OTP,
-            resetURL: `http://localhost:2200/api/auth/resetPassword/${user[_id]}`
         });
-
 
     }catch(error){
         console.log('Error while sending reset password link', error);

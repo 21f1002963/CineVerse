@@ -59,11 +59,11 @@ export default function LoginForm() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#1a1a2e] via-[#23234b] to-[#0f3460]">
-      <div className="flex flex-col items-center w-full">
-        <Image src="/cineverse-logo.svg" alt="CineVerse Logo" width={80} height={80} className="mb-6 drop-shadow-lg" />
+      <div className="flex flex-col items-center w-full mt-[130px]">
+        
         <Card className="mx-auto w-full max-w-sm shadow-2xl rounded-2xl border-0 bg-[#23234b]/90 backdrop-blur">
           <CardHeader>
-            <CardTitle className="text-3xl font-extrabold text-center text-white">Create your CineVerse account</CardTitle>
+            <CardTitle className="text-3xl font-extrabold text-center text-white">Create your account</CardTitle>
             <CardDescription className="text-center text-gray-300">
               Enter your information to create an account
             </CardDescription>
@@ -78,7 +78,7 @@ export default function LoginForm() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   required
-                  className="focus:ring-2 focus:ring-pink-500"
+                  className="focus:ring-2 focus:ring-pink-500 text-white"
                 />
               </div>
               <div className="grid gap-2">
@@ -86,11 +86,11 @@ export default function LoginForm() {
                 <Input
                   id="email"
                   type="email"
-                  placeholder="m@example.com"
+                  placeholder="parky@example.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="focus:ring-2 focus:ring-pink-500"
+                  className="focus:ring-2 focus:ring-pink-500 text-white"
                 />
               </div>
               <div className="grid gap-2">
@@ -100,7 +100,7 @@ export default function LoginForm() {
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="focus:ring-2 focus:ring-pink-500"
+                  className="focus:ring-2 focus:ring-pink-500 text-white"
                 />
               </div>
               <div className="grid gap-2">
@@ -110,7 +110,7 @@ export default function LoginForm() {
                   type="password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="focus:ring-2 focus:ring-pink-500"
+                  className="focus:ring-2 focus:ring-pink-500 text-white"
                 />
               </div>
               <Button onClick={onSubmit} className="w-full bg-pink-600 hover:bg-pink-700 text-white font-semibold py-2 rounded-lg transition-all">
