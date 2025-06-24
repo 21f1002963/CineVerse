@@ -1,7 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
-import { Sheet, SheetContent, SheetTrigger } from "./sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetTitle,
+  SheetTrigger,
+  SheetDescription,
+} from "./sheet";
 import Image from "next/image";
 import { ChevronRightIcon, ExternalLinkIcon } from "lucide-react";
 import Link from "next/link";
@@ -49,6 +55,10 @@ const UserProfileSheet = () => {
         )}
       </SheetTrigger>
       <SheetContent side={"right"} className="px-6">
+        <SheetTitle className="sr-only">User Profile</SheetTitle>
+        <SheetDescription className="sr-only">
+          View and manage your user profile, subscription, and settings.
+        </SheetDescription>
         <div className="bg-slate-700/30 p-6 flex flex-col items-center gap-2 mt-[100px] rounded-lg">
           {!userData.isLoggedIn ? (
             <Image

@@ -6,7 +6,7 @@ const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000"
 
 const safeFetch = async (endpoint) => {
   try {
-    const response = await fetch(`${API_BASE}${endpoint}`, { cache: 'force-cache' });
+    const response = await fetch(`${API_BASE}${endpoint}`, { cache: 'no-store' });
     if (!response.ok) {
       console.error(`API request failed for ${endpoint} with status: ${response.status}`);
       return [];

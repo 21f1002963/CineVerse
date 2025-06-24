@@ -1,21 +1,8 @@
 const { response } = require("express");
 const { tmdbAPI, TMDB_ENDPOINT } = require("../SERVICES/tmdb.services");
+const { retryApiCall } = require("../UTILITY/apiUtils");
 
 // Helper function to retry API calls
-const retryApiCall = async (apiCall, maxRetries = 3) => {
-    for (let attempt = 1; attempt <= maxRetries; attempt++) {
-        try {
-            return await apiCall();
-        } catch (error) {
-            console.error(`Attempt ${attempt} failed:`, error.message);
-            if (attempt === maxRetries) {
-                throw error;
-            }
-            // Wait before retrying (exponential backoff)
-            await new Promise(resolve => setTimeout(resolve, 1000 * attempt));
-        }
-    }
-};
 
 const getNowPlaying = async (req, res) => {
     try{
@@ -35,6 +22,10 @@ const getTrending = async (req, res) => {
         
         const { data } = await retryApiCall(() => tmdbAPI.get(endpoint));
         
+        if (data.results && Array.isArray(data.results)) {
+            data.results = data.results.map((item) => ({ ...item, media_type }));
+        }
+
         console.log(`Successfully fetched trending ${media_type}, results count:`, data?.results?.length || 0);
         res.status(200).json({ status: "success", data });
     } catch (err) {
@@ -70,6 +61,10 @@ const getTopRated = async (req, res) => {
         console.log(`Fetching top rated ${media_type} from endpoint: ${endpoint}`);
         
         const { data } = await retryApiCall(() => tmdbAPI.get(endpoint));
+        
+        if (data.results && Array.isArray(data.results)) {
+            data.results = data.results.map((item) => ({ ...item, media_type }));
+        }
         
         console.log(`Successfully fetched top rated ${media_type}, results count:`, data?.results?.length || 0);
         res.status(200).json({ status: "success", data });
@@ -110,6 +105,10 @@ const getPopular = async (req, res) => {
         
         const { data } = await retryApiCall(() => tmdbAPI.get(endpoint));
         
+        if (data.results && Array.isArray(data.results)) {
+            data.results = data.results.map((item) => ({ ...item, media_type }));
+        }
+
         console.log(`Successfully fetched popular ${media_type}, results count:`, data?.results?.length || 0);
         res.status(200).json({ status: "success", data });
     } catch (err) {

@@ -16,18 +16,18 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <StoreProvider>
-      <html lang="en" className="scroll-smooth">
-        <body className={inter.className} suppressHydrationWarning={true}>
+    <html lang="en" className="scroll-smooth">
+      <body className={inter.className} suppressHydrationWarning={true}>
+        <StoreProvider>
           <AuthProvider>
+            <NpProgressProvider />
             <Header />
             {children}
             <Footer />
             <Toaster />
           </AuthProvider>
-          <NpProgressProvider />
-        </body>
-      </html>
-    </StoreProvider>
+        </StoreProvider>
+      </body>
+    </html>
   );
 }
