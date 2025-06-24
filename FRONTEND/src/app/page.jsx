@@ -1,9 +1,28 @@
 "use client";
 import ListingSection from "@/components/section/Listing_section";
-import { api } from "@/lib/api";
+import { ENDPOINT } from "@/lib/api";
 import React, { useEffect, useState } from "react";
 
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || "https://cineverse-8qbv.onrender.com";
+
+// Generic error handler for API calls
+const safeFetch = async (endpoint) => {
+  try {
+    const response = await fetch(`${API_BASE}${endpoint}`);
+    if (!response.ok) {
+      console.error(`API request failed for ${endpoint} with status: ${response.status}`);
+      return [];
+    }
+    const responseData = await response.json();
+    return responseData?.data?.results || [];
+  } catch (error) {
+    console.error(`Failed to fetch ${endpoint}:`, error);
+    return [];
+  }
+};
+
 export default function Home() {
+  const [bannerData, setBannerData] = useState([]);
   const [sections, setSections] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -11,41 +30,59 @@ export default function Home() {
     {
       label: "Trending Movies",
       href: "trending",
-      endpoint: "/discover/trending/movie",
+      endpoint: ENDPOINT.discoverTrending("movie"),
     },
     {
       label: "Popular Movies",
       href: "popular",
-      endpoint: "/discover/popular/movie",
+      endpoint: ENDPOINT.discoverPopular("movie"),
+    },
+    {
+      label: "Top Rated Movies", 
+      href: "top_rated",
+      endpoint: ENDPOINT.discoverTopRated("movie"),
+    },
+    {
+      label: "Popular TV Shows",
+      href: "popular_tv",
+      endpoint: ENDPOINT.discoverPopular("tv"),
     },
   ];
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      const results = await Promise.all(
-        list.map(async (item) => {
-          try {
-            const response = await api.get(item.endpoint);
-            return {
-              ...item,
-              data: response.data?.data?.results || [],
-            };
-          } catch (error) {
-            console.error(`Failed to fetch ${item.endpoint}:`, error);
-            return {
-              ...item,
-              data: [],
-            };
-          }
-        })
-      );
-      setSections(results);
-      setLoading(false);
+      try {
+        // Fetch banner data and all sections in parallel
+        const [
+          bannerDataResponse,
+          ...categoryData
+        ] = await Promise.all([
+          safeFetch(ENDPOINT.discoverTrending("movie")), // Use trending movies for banner
+          ...list.map(item => safeFetch(item.endpoint))
+        ]);
+
+        console.log("Home page banner data:", bannerDataResponse);
+        console.log("Home page category data:", categoryData);
+
+        setBannerData(bannerDataResponse);
+        
+        // Combine list definition with fetched data
+        const sectionsWithData = list.map((item, index) => ({
+          ...item,
+          data: categoryData[index],
+        }));
+
+        setSections(sectionsWithData);
+      } catch (error) {
+        console.error('Failed to fetch home page data:', error);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchData();
-  }, []);
+  }, []); // Empty dependency array is intentional for initial load
 
   if (loading) {
     return (
@@ -58,6 +95,7 @@ export default function Home() {
   return (
     <main>
       <ListingSection 
+        bannerData={bannerData}
         list={sections} 
       />
     </main>
