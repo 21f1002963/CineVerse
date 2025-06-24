@@ -133,16 +133,17 @@ const addToWishlist = async function(req, res){
         const wishlistItem = {
             poster_path: postItem.poster_path,
             name: postItem.title || postItem.name,
-            id: postItem.id,
+            id: String(postItem.id), // Ensure id is a string to match schema
             media_type: media_type,
         };
 
-        /**if(user.wishList.find((item) => item.id === id)){
+        // Check if item already exists in wishlist
+        if(user.wishList.find((item) => item.id === String(id))){
             return res.status(400).json({
                 message: "Item already in wishlist",
                 status: "failed"
             }) 
-        }**/
+        }
 
         await UserModel.findByIdAndUpdate(
             userId,

@@ -6,12 +6,22 @@ const { protectRouteMiddleWare } = require('../CONTROLLER/AuthenticationControll
 // Get current user profile (returns guest if not authenticated)
 router.get('/', async (req, res, next) => {
   try {
+    const jwttoken = req.cookies.JWT;
+    
+    if(!jwttoken) {
+      return res.status(401).json({
+        message: 'Unauthorized user',
+        status: "failure"
+      });
+    }
+
+    // Use the protection middleware directly
     await protectRouteMiddleWare(req, res, () => getCurrentUser(req, res));
   } catch (err) {
-    // If not authenticated, return guest/default user
-    return res.status(200).json({
-      user: null,
-      status: "guest"
+    // If not authenticated, return 401
+    return res.status(401).json({
+      message: 'Unauthorized user',
+      status: "failure"
     });
   }
 });
