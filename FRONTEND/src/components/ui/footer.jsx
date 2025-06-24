@@ -49,7 +49,7 @@ const connectWithUsLinks = [
 
 export default function Footer() {
   return (
-    <footer className="bg-[#17181a] text-gray-300 mt-10">
+    <footer className="bg-[#17181a] text-gray-300 mt-5">
       <div className="md:mx-auto">
         <div className="flex flex-col md:flex-row md:justify-between md:items-start px-8 py-4">
           <div className="flex flex-col md:flex-row md:items-center gap-8 md:gap-16 mt-6">

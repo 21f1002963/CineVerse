@@ -22,9 +22,22 @@ const userSlice = createSlice({
         state.user.isPremium = action.payload;
       }
     },
+    setWishlist: (state, action) => {
+      if (state.user) {
+        state.user.wishList = action.payload;
+      }
+    },
+    logout: (state) => {
+      state.user = null;
+    },
   },
 });
 
-export const { userLoggedInDetails, userLoggedOutDetails, updateUserPremium } =
-  userSlice.actions;
+export const {
+  userLoggedInDetails,
+  userLoggedOutDetails,
+  updateUserPremium,
+  setWishlist,
+  logout,
+} = userSlice.actions;
 export default userSlice.reducer;

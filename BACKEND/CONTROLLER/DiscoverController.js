@@ -127,11 +127,29 @@ const getPopular = async (req, res) => {
     }
 }
 
+const searchAll = async (req, res) => {
+    try {
+        const { query } = req.query;
+        const { data } = await retryApiCall(() => tmdbAPI.get(TMDB_ENDPOINT.multiSearch, {
+            params: { query }
+        }));
+        res.status(200).json({ status: "success", data });
+    } catch (err) {
+        console.error("Error in searchAll:", err);
+        res.status(500).json({ 
+            message: "Failed to search", 
+            status: "failure",
+            error: err.message 
+        });
+    }
+}
+
 module.exports = {
     getNowPlaying,
     getTrending,
     getUpcoming,
     getTopRated,
     getGenres,
-    getPopular
+    getPopular,
+    searchAll
 }

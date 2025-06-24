@@ -1,9 +1,10 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import UserProfileSheet from "./user-profile-sheet";
 import { useSelector } from "react-redux";
+import { useState } from "react";
 
 export const navLinks = [
   { name: "Home", key: "", href: "/" },
@@ -15,8 +16,17 @@ export const navLinks = [
 
 const Header = () => {
   const path = usePathname();
+  const router = useRouter();
+  const [searchQuery, setSearchQuery] = useState("");
   const activeTabKey = path.split("/")?.[1];
   const userData = useSelector((state) => state.user);
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      router.push(`/search?q=${searchQuery.trim()}`);
+    }
+  };
 
   return (
     <header className="bg-[#0d0e10] py-4 w-full fixed top-0 z-50  border-b-2 border-b-grey">
@@ -58,14 +68,19 @@ const Header = () => {
         </nav>
 
         <div className="flex items-center justify-end w-full">
-          <div className="rounded-3xl border lg:flex justify-center items-center px-4 gap-2 hidden">
+          <form
+            onSubmit={handleSearch}
+            className="rounded-3xl border lg:flex justify-center items-center px-4 gap-2 hidden"
+          >
             <Image src="/search.svg" alt="search icon" height={20} width={20} />
             <input
               type="text"
               placeholder="Search..."
               className=" py-2 bg-transparent  text-white font-medium focus:outline-none text-sm max-w-[150px]"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
             />
-          </div>
+          </form>
           <UserProfileSheet />
         </div>
       </div>

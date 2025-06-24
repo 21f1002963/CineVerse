@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getTrending, getTopRated, getGenres, getPopular } = require('../CONTROLLER/DiscoverController');
+const { getTrending, getTopRated, getGenres, getPopular, searchAll } = require('../CONTROLLER/DiscoverController');
 
 // Example discover route
 router.get('/', (req, res) => {
@@ -18,5 +18,8 @@ router.get('/genres/:media_type', getGenres);
 
 // Example: Popular Discover
 router.get('/popular/:media_type', getPopular);
+
+// Search route
+router.get('/search', searchAll);
 
 module.exports = router;

@@ -43,6 +43,9 @@ const TMDB_ENDPOINT = {
     // Discover
     discoverMovies: "/discover/movie",
     discoverTvShows: "/discover/tv",
+
+    // Search
+    multiSearch: "/search/multi"
 };
 
 module.exports = {

@@ -125,9 +125,9 @@ const addToWishlist = async function(req, res){
 
         let postItem;
         if (media_type == "tv") {
-            postItem = (await tmdbApi.get(TMDB_ENDPOINT.fetchTvShowDetails(id))).data;
+            postItem = (await tmdbAPI.get(TMDB_ENDPOINT.fetchTvShowDetails(id))).data;
           } else {
-            postItem = (await tmdbApi.get(TMDB_ENDPOINT.fetchMovieDetails(id))).data;
+            postItem = (await tmdbAPI.get(TMDB_ENDPOINT.fetchMovieDetails(id))).data;
         }
 
         const wishlistItem = {
@@ -144,12 +144,10 @@ const addToWishlist = async function(req, res){
             }) 
         }**/
 
-        user.wishList.push({wishlistItem});
-
         await UserModel.findByIdAndUpdate(
-            {_id: userId},
-            {$push: {wishList: user.wishlistItem}},
-            {new: true, upsert: true}
+            userId,
+            {$push: {wishList: wishlistItem}},
+            {new: true}
         );
 
         res.status(200).json({
