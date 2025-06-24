@@ -10,13 +10,16 @@ import NpProgressProvider from "@/providers/NpProgressProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Jio Cinema Clone",
-  description: "A clone of jio cinema for educational purpose only.",
+  title: "CineVerse",
+  description: "A unique streaming experience.",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="scroll-smooth">
+      <head>
+        <link rel="icon" href="/cineverse-logo.svg" type="image/svg+xml" />
+      </head>
       <body className={inter.className} suppressHydrationWarning={true}>
         <StoreProvider>
           <AuthProvider>

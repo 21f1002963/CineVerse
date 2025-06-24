@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const headings = [
   {
-    title: "JioCinema",
+    title: "CineVerse",
     links: ["For You", "Sports", "Movies", "TV Shows"],
   },
   {
@@ -111,11 +111,11 @@ export default function Footer() {
             Copyright © 2024 Viacom18 Media PVT LTD. All rights reserved.
           </p>
           <Image
-            src="/jio-logo.png"
-            alt="Jio Logo"
-            width={48}
-            height={48}
-            className="md:h-12 md:w-12 h-10 w-10"
+            src="/cineverse-logo.svg"
+            alt="CineVerse Logo"
+            width={80}
+            height={80}
+            className="md:h-20 md:w-20 h-16 w-16"
           />
         </div>
       </div>

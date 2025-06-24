@@ -66,8 +66,8 @@ const SubscriptionPage = props => {
         key: process.env.NEXT_PUBLIC_KEY_ID ?? "",
         amount: res.data.amount,
         currency: "INR",
-        name: "Jio Corp",
-        description: "Test JIO CINEMA Transaction",
+        name: "CineVerse",
+        description: "Test CineVerse Transaction",
         order_id: res.data.orderId,
         handler: async function(response) {
           toast({ title: `Payment Successfull ${response.razorpay_order_id}` })
@@ -125,7 +125,7 @@ return (
 
         <div className="md:mx-16">
           <h1 className="md:text-4xl text-2xl  leading-none font-black md:text-12 mb-4 text-nowrap">
-            JioCinema Premium
+            CineVerse Premium
           </h1>
           <p className="text-lg mb-8 w-[70%] text-wrap hidden md:block">
             Entertainment Redefined - The best of Hollywood, Before TV

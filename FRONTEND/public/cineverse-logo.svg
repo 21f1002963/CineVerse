@@ -1,0 +1,8 @@
+<svg width="160" height="40" viewBox="0 0 160 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="160" height="40" rx="12" fill="#1A1A2E"/>
+  <g>
+    <circle cx="28" cy="20" r="14" fill="#E94560"/>
+    <polygon points="24,14 36,20 24,26" fill="#fff"/>
+  </g>
+  <text x="50" y="26" font-family="'Segoe UI', Arial, sans-serif" font-size="20" fill="#fff" font-weight="bold">CineVerse</text>
+</svg> 

@@ -34,8 +34,8 @@ const Header = () => {
         <div className="flex items-center">
           <Link href="/" className="mr-4">
             <Image
-              src="/logo.svg"
-              alt="JioCinema Logo"
+              src="/cineverse-logo.svg"
+              alt="CineVerse Logo"
               width={136}
               height={36}
               className="md:h-9 md:max-w-[136px] max-w-24"
