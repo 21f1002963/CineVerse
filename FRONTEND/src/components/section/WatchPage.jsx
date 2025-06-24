@@ -5,11 +5,8 @@ import Link from 'next/link';
 import { buttonVariants } from '@/components/ui/button';
 import WishlistButton from '../ui/wishlist-button';
 import ShareButton from '../ui/share-button';
-import { useSearchParams } from 'next/navigation';
 
-const WatchPage = ({ details, media_type }) => {
-    const searchParams = useSearchParams();
-    const id = searchParams.get("id");
+const WatchPage = ({ details, media_type, id }) => {
 
     return (
         <div className="flex flex-col min-h-screen bg-background text-foreground">

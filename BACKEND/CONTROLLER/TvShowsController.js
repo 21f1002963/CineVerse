@@ -48,7 +48,7 @@ const getTvShowDetails = async (req, res) => {
             key: trailer ? trailer.key : tvShowVideos?.results?.[0]?.key,
         };
 
-        res.status(200).json({ status: "success", data: { results: [data] } });
+        res.status(200).json({ status: "success", data });
     } catch (err) {
         console.error("Error in getTvShowDetails:", err.message);
         res.status(500).json({

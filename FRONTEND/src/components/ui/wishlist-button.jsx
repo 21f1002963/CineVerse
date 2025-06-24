@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { api } from "@/lib/api";
+import { api, ENDPOINT } from "@/lib/api";
 import { useToast } from "@/components/ui/use-toast";
 import { setWishlist } from "@/redux/userSlice";
 import { Button } from "./button";
@@ -15,7 +15,7 @@ const WishlistButton = ({ media_type, id }) => {
 
     useEffect(() => {
         if (user?.wishList) {
-            setIsInWishlist(user.wishList.some(item => item.id === id));
+            setIsInWishlist(user.wishList.some(item => item.id == id));
         }
     }, [user?.wishList, id]);
 
@@ -27,19 +27,17 @@ const WishlistButton = ({ media_type, id }) => {
                 toast({
                     title: "Info",
                     description: "Remove from wishlist functionality will be added soon.",
-                    variant: "info",
                 });
                 return;
             }
 
-            await api.post('/user/wishlist', { id, media_type });
-            const response = await api.get('/user/wishlist');
+            await api.post(ENDPOINT.addToWishList, { id, media_type });
+            const response = await api.get(ENDPOINT.getWishList);
             dispatch(setWishlist(response.data.data));
 
             toast({
                 title: "Success",
                 description: "Added to your wishlist.",
-                variant: "success",
             });
         } catch (error) {
             console.error(error);
@@ -54,7 +52,7 @@ const WishlistButton = ({ media_type, id }) => {
     return (
         <Button
             onClick={handleWishlist}
-            className="bg-gray-700 text-white hover:bg-gray-600"
+            variant={isInWishlist ? 'default' : 'secondary'}
         >
             {isInWishlist ? 'In Watchlist' : 'Add to Watchlist'}
         </Button>

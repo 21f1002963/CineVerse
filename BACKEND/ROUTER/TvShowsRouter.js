@@ -31,10 +31,13 @@ router.get('/drama', getDramaTvShows);
 // Mystery
 router.get('/mystery', getMysteryTvShows);
 
+// Popular
+router.get('/popular', getPopular);
+
+// Top Rated
+router.get('/top_rated', getTopRated);
+
 // TV Show Details
 router.get('/:id', getTvShowDetails);
-
-router.get('/popular', getPopular);
-router.get('/top_rated', getTopRated);
 
 module.exports = router;

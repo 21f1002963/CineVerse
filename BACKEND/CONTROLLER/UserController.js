@@ -125,14 +125,14 @@ const addToWishlist = async function(req, res){
 
         let postItem;
         if (media_type == "tv") {
-            postItem = (await tmdbAPI.get(TMDB_ENDPOINT.fetchTvShowDetails(id))).data;
+            postItem = (await tmdbAPI.get(TMDB_ENDPOINT.tvShowDetails(id))).data;
           } else {
-            postItem = (await tmdbAPI.get(TMDB_ENDPOINT.fetchMovieDetails(id))).data;
+            postItem = (await tmdbAPI.get(TMDB_ENDPOINT.movieDetails(id))).data;
         }
 
         const wishlistItem = {
             poster_path: postItem.poster_path,
-            name: postItem.title,
+            name: postItem.title || postItem.name,
             id: postItem.id,
             media_type: media_type,
         };
