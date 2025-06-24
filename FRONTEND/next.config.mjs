@@ -1,6 +1,7 @@
 import netlifyNext from "@netlify/next";
 const withNetlify = netlifyNext.withNetlify || netlifyNext.default || netlifyNext;
 
+// 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
