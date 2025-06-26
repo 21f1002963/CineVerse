@@ -81,5 +81,4 @@ app.listen(PORT, function() {
     console.log(`Server is running on port ${PORT}`);
 });
 
-// Example: app.use('/api/user', protectRouteMiddleWare, userRouter); // Uncomment to protect all user routes
 
